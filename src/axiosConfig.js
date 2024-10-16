@@ -1,8 +1,16 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-// Set the base URL for your API
-const API_URL = 'https://easycart-backend.onrender.com'||'http://localhost:5000' ; // Replace with your actual API URL
+// Set the base URL for your API based on the environment
+const API_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://easycart-backend.onrender.com'
+    : 'http://localhost:5000';
+
+    console.log(API_URL);
+    
+
+// Set the base URL for axios
 axios.defaults.baseURL = API_URL;
 
 // Function to set the token in headers
