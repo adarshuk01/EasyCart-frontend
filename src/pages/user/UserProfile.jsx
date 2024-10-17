@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProfile } from '../../redux/user/action/userActions';
+import { Link } from 'react-router-dom';
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-
   const userProfile = useSelector((state) => state.user.userProfile);
   const { loading, error, user } = userProfile;
 
@@ -12,96 +12,92 @@ const UserProfile = () => {
     dispatch(getUserProfile());
   }, [dispatch]);
 
-  const handleDeleteAccount = () => {
-    // Logic to handle account deletion can be implemented here
-    alert('Delete account functionality coming soon.');
-  };
-
   return (
-    <div className="container mx-auto">
-      <div className="bg-white shadow-lg rounded-lg p-6">
-        {/* Profile Header */}
-        <div className="flex items-center justify-between border-b pb-4">
-          <h2 className="text-2xl font-semibold">My Profile</h2>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            Edit Profile
-          </button>
+    <div className="container mx-auto ">
+      <div className="bg-white  rounded-lg p-2">
+        {/* User Header */}
+        <div className="flex items-center gap-4 mb-4">
+          <img
+            src={user?.profilePic || 'https://via.placeholder.com/150'}
+            alt="Profile"
+            className="rounded-full w-16 h-16 object-cover"
+          />
+          <div>
+            <h3 className="text-lg font-semibold">
+              {user?.firstName || 'User Name'}
+            </h3>
+            <p className="text-gray-600">{user?.phone || 'Phone Number'}</p>
+          </div>
         </div>
 
-        {/* Profile Content */}
-        <div className="flex items-center flex-col lg:flex-row mt-6 gap-6">
-          {loading ? (
-            <p>Loading...</p>
-          ) : error ? (
-            <p className="text-red-500">{error}</p>
-          ) : (
-            <>
-              {/* Left Column - Profile Picture and Info */}
-              <div className="flex flex-col items-center lg:w-1/3">
-                <img
-                  src={user.profilePic || 'https://via.placeholder.com/150'}
-                  alt="Profile"
-                  className="rounded-full w-32 h-32 object-cover mb-4"
-                />
-                <h3 className="text-lg font-semibold">
-                  {`${user.firstName || ''} ${user.lastName || ''}`.trim() || 'John Doe'}
-                </h3>
-                <p className="text-gray-600">{user.email || 'johndoe@example.com'}</p>
-              </div>
+        {/* Zepto Pass Banner */}
+        <div className="bg-purple-500 text-white rounded-lg p-4 mb-6 relative">
+          <div>
+            <h4 className="font-semibold text-lg">EasyCart Pass</h4>
+            <p className="text-sm">
+              You would potentially save <span className="font-bold">₹400</span> per month with EasyCart Pass
+            </p>
+          </div>
+          <button className="bg-yellow-400 text-black font-semibold rounded-md px-3 py-1 mt-4">
+            Get EasyCart Pass
+          </button>
+          <div className="absolute top-0 right-0 p-4">
+            {/* Icon for illustration */}
+            <img src="https://static.vecteezy.com/system/resources/previews/013/167/047/non_2x/wallet-coin-3d-illustration-free-png.png" alt="Wallet Icon" className="w-16 h-16"/>
+          </div>
+        </div>
 
-              {/* Right Column - Account Details */}
-              <div className="flex-1">
-                <div className="bg-gray-50 p-4 rounded-lg mb-6">
-                  <h4 className="text-lg font-medium mb-2">Personal Information</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm text-gray-600">Full Name</label>
-                      <p className="mt-1">
-                        {`${user.firstName || ''} ${user.lastName || ''}`.trim() || 'John Doe'}
-                      </p>
-                    </div>
-                    <div>
-                      <label className="text-sm text-gray-600">Email Address</label>
-                      <p className="mt-1">{user.email || 'johndoe@example.com'}</p>
-                    </div>
-                    <div>
-                      <label className="text-sm text-gray-600">Phone Number</label>
-                      <p className="mt-1">{user.phone || '+123 456 7890'}</p>
-                    </div>
-                    <div>
-                      <label className="text-sm text-gray-600">Address</label>
-                      <p className="mt-1">{user.address || '123 Main Street, Anytown, USA'}</p>
-                    </div>
-                  </div>
-                </div>
+        {/* User Options */}
+        <ul className="space-y-2">
+        <Link to={'/myorders'}>
+          <li className="flex justify-between items-center hover:bg-slate-100 p-2 cursor-pointer border-b-2 border-slate-100">
+            <span className="flex  items-center gap-2 ">
+              <i className="icon-class-name"></i> {/* Replace with appropriate icon */}
+              Orders
+            </span>          
+            <span>&gt;</span>
+          </li>
+          </Link>
+          <li className="flex justify-between items-center hover:bg-slate-100 p-2 cursor-pointer border-b-2 border-slate-100">
+            <span className="flex items-center gap-2">
+              <i className="icon-class-name"></i>
+              Customer Support
+            </span>
+            <span>&gt;</span>
+          </li>
+          <li className="flex justify-between items-center hover:bg-slate-100 p-2 cursor-pointer border-b-2 border-slate-100">
+            <span className="flex items-center gap-2">
+              <i className="icon-class-name"></i>
+              Manage Referrals
+            </span>
+            <span>&gt;</span>
+          </li>
+          <li className="flex justify-between items-center hover:bg-slate-100 p-2 cursor-pointer border-b-2 border-slate-100">
+            <span className="flex items-center gap-2">
+              <i className="icon-class-name"></i>
+              Addresses
+            </span>
+            <span>&gt;</span>
+          </li>
+          <li className="flex justify-between items-center hover:bg-slate-100 p-2 cursor-pointer border-b-2 border-slate-100">
+            <span className="flex items-center gap-2">
+              <i className="icon-class-name"></i>
+              Profile
+            </span>
+            <span>&gt;</span>
+          </li>
+          <li className="flex justify-between items-center hover:bg-slate-100 p-2 cursor-pointer border-b-2 border-slate-100">
+            <span className="flex items-center gap-2">
+              <i className="icon-class-name"></i>
+              Wallet
+            </span>
+            <span>&gt;</span>
+          </li>
+        </ul>
 
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="text-lg font-medium mb-2">Account Settings</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm text-gray-600">Password</label>
-                      <p className="mt-1">************</p>
-                      <button className="text-blue-500 text-sm mt-2 hover:underline">
-                        Change Password
-                      </button>
-                    </div>
-                    <div>
-                      <label className="text-sm text-gray-600">Account Status</label>
-                      <p className="mt-1">{user.status || 'Active'}</p>
-                    </div>
-                    <div>
-                      <button
-                        onClick={handleDeleteAccount}
-                        className="bg-red-500 px-3 py-2 rounded-lg text-white font-semibold"
-                      >
-                        Delete Account
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
+        {/* Logout Button */}
+        <div className="mt-6 text-center">
+          <button className="text-red-500">Log Out</button>
         </div>
       </div>
     </div>

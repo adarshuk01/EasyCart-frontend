@@ -89,8 +89,8 @@ const ProductDetailsPage = () => {
                         <button
                             onClick={addToCartHandler}
                             className={`w-full text-center py-2 rounded-md text-white ${product.stock === 0
-                                    ? 'bg-gray-400 cursor-not-allowed'
-                                    : 'bg-blue-500 hover:bg-blue-600'
+                                ? 'bg-gray-400 cursor-not-allowed'
+                                : 'bg-blue-500 hover:bg-blue-600'
                                 } transition duration-300`}
                             disabled={product.stock === 0}
                         >
@@ -99,8 +99,8 @@ const ProductDetailsPage = () => {
 
                         <button
                             className={`w-full text-center py-2 rounded-md ${product.stock === 0
-                                    ? 'bg-yellow-400 cursor-not-allowed text-black'
-                                    : 'border border-blue-500 text-blue-500'
+                                ? 'bg-yellow-400 cursor-not-allowed text-black'
+                                : 'border border-blue-500 text-blue-500'
                                 } transition duration-300`}
                             disabled={product.stock === 0}
                         >
@@ -121,23 +121,28 @@ const ProductDetailsPage = () => {
                                         <div className="flex items-center gap-2">
                                             {/* Dummy user image */}
                                             <img
-                                                src={`https://ui-avatars.com/api/?name=${review.user.firstName}+${review.user.lastName}&background=random&color=fff`}
-                                                alt={`${review.user.firstName} ${review.user.lastName}`}
+                                                src={`https://ui-avatars.com/api/?name=${(review.user?.firstName || 'User')}+${(review.user?.lastName || 'Name')}&background=random&color=fff`}
+                                                alt={`${review.user?.firstName || 'User'} ${review.user?.lastName || 'Name'}`}
                                                 className="w-10 h-10 rounded-full object-cover"
                                             />
+
+
                                             <div>
-                                                <p className="font-semibold">{review.user.firstName} {review.user.lastName}</p>
+                                                <p className="font-semibold">
+                                                    {review.user?.firstName || 'Anonymous'} {review.user?.lastName || 'User'}
+                                                </p>
                                                 <div className="flex items-center mb-2">
                                                     {Array.from({ length: 5 }, (_, index) => (
                                                         <Star
                                                             key={index}
                                                             stroke=""
-                                                            fill={`${index < review.rating ? 'blue' : 'gray'}`}
+                                                            fill={`${index < (review.rating || 0) ? 'blue' : 'gray'}`}
                                                             className="h-5 w-5"
                                                         />
                                                     ))}
                                                 </div>
                                             </div>
+
                                         </div>
                                         <p>"{review.comment}"</p>
                                     </div>
