@@ -12,6 +12,7 @@ const ProductList = () => {
   const filterProduct = useSelector((state) => state.user.filterProducts);
   const productList = useSelector((state) => state.admin.productList);
   const [isFilterApplied, setIsFilterApplied] = useState(false); // Track filter state
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false); // Track modal state
 
   const { loading: filterLoading, error: filterError, products: filteredProducts } = filterProduct;
   const { loading: productLoading, error: productError, products: allProducts } = productList;
@@ -26,6 +27,7 @@ const ProductList = () => {
   const handleApplyFilter = (filters) => {
     dispatch(listProductsByFilter({ ...filters, subcategoryId: id })); // Pass subcategoryId and filter options
     setIsFilterApplied(true); // Set filter applied state
+    setIsFilterModalOpen(false); // Close modal after applying filter
   };
 
   // Determine which products to display
@@ -35,12 +37,44 @@ const ProductList = () => {
 
   return (
     <div>
-      {/* Filter Options */}
-      <FilterOptions 
-        subcategoryId={id} 
-        onApplyFilter={handleApplyFilter} 
-        products={allProducts} // Pass the list of all products here
-      />
+      {/* Filter Options for Large Screens */}
+      <div className="hidden lg:block mb-4">
+        <FilterOptions
+          subcategoryId={id}
+          onApplyFilter={handleApplyFilter}
+          products={allProducts} // Pass the list of all products here
+        />
+      </div>
+
+      {/* Filter Button for Mobile View */}
+      <div className="lg:hidden mb-4">
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+          onClick={() => setIsFilterModalOpen(true)}
+        >
+          Open Filters
+        </button>
+      </div>
+
+      {/* Filter Modal for Mobile View */}
+      {isFilterModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white w-11/12 max-w-md p-4 rounded-lg shadow-lg">
+            <h2 className="text-lg font-semibold mb-4">Filter Options</h2>
+            <FilterOptions
+              subcategoryId={id}
+              onApplyFilter={handleApplyFilter}
+              products={allProducts} // Pass the list of all products here
+            />
+            <button
+              className="mt-4 text-red-500"
+              onClick={() => setIsFilterModalOpen(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Product List */}
       {loading ? (
@@ -48,7 +82,7 @@ const ProductList = () => {
       ) : error ? (
         <p>{error}</p>
       ) : (
-        <div className="grid lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-1 gap-4">
+        <div className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-2 gap-4">
           {productsToDisplay && productsToDisplay.length > 0 ? (
             productsToDisplay.map((product) => (
               <ProductCard

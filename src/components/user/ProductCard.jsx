@@ -66,7 +66,7 @@ const ProductCard = ({ product }) => {
 
       <h3 className="text-lg font-semibold m-0">
         <Link to={`/products/${product._id}`}>
-          {product.name.length > 20 ? `${product.name.slice(0, 24)}...` : product.name}
+          {product.name.length > 20 ? `${product.name.slice(0, 19)}...` : product.name}
         </Link>
       </h3>
       <span className="text-gray-600 block mt-[-5px] mb-1">{product.brand}</span>
@@ -114,9 +114,6 @@ const ProductCard = ({ product }) => {
           +
         </button>
       </div>
-
-
-
       <button
         onClick={handleAddToCart}
         className={`mt-2 block w-full ${product.stock === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'

@@ -35,7 +35,7 @@ const ProductDetailsPage = () => {
     };
 
     return (
-        <div className="container mx-auto p-6">
+        <div className="container mx-auto ">
             <div className="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6">
                 {/* Product Image */}
                 <img
@@ -116,7 +116,7 @@ const ProductDetailsPage = () => {
                             <p>No reviews yet.</p>
                         ) : (
                             product.reviews.map((review) => (
-                                <div key={review._id} className="mb-4 p-4 bg-gray-100 rounded flex items-start space-x-4">
+                                <div key={review._id} className="mb-4 p-4 bg-slate-100  rounded-lg flex items-start space-x-4">
                                     <div>
                                         <div className="flex items-center gap-2">
                                             {/* Dummy user image */}
@@ -155,7 +155,6 @@ const ProductDetailsPage = () => {
 
             {/* Add Review Form */}
             <div className="mt-4">
-                <h2 className="text-2xl font-semibold mb-4">Add a Review</h2>
                 <ReviewForm productId={id} />
             </div>
         </div>
